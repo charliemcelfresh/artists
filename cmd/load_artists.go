@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/joho/godotenv"
 	"github.com/lytics/logrus"
 	"github.com/spf13/cobra"
 )
 
 var (
-	DB             *sql.DB
 	loadArtistsCmd *cobra.Command = &cobra.Command{
 		Use:   "loadArtists",
 		Short: "load artists to database",
@@ -23,7 +23,10 @@ func init() {
 	loadArtistsCmd.Flags().IntVar(&RunCount, "count", 0, "number of artists to load")
 	rootCmd.AddCommand(loadArtistsCmd)
 
-	var err error
+	err := godotenv.Load()
+	if err != nil {
+		logrus.Fatal("Error loading .env file")
+	}
 	DB, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		logrus.Fatal("Error connecting to DB")

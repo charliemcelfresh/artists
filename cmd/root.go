@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"database/sql"
 	"errors"
 
 	"github.com/spf13/cobra"
@@ -13,6 +14,8 @@ var rootCmd = &cobra.Command{
 		return errors.New("subcommand required")
 	},
 }
+
+var DB *sql.DB
 
 // Execute launches the CLI
 func Execute() error {
