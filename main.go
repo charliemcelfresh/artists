@@ -1,55 +1,22 @@
+/*
+Copyright © 2020 NAME HERE <EMAIL ADDRESS>
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
 package main
 
-import (
-	"database/sql"
-	"encoding/json"
-	"github.com/joho/godotenv"
-	_ "github.com/lib/pq"
-	"github.com/sirupsen/logrus"
-	"net/http"
-	"os"
-)
-
-var (
-	DB *sql.DB
-)
-
-type artist struct {
-	ArtistID int64 `json:"artist_id"`
-	Email string `json:"email"`
-}
-
-func init() {
-	err := godotenv.Load()
-	if err != nil {
-		logrus.Fatal("Error loading .env file")
-	}
-	DB, err = sql.Open("postgres", os.Getenv("DATABASE_URL"))
-	if err != nil {
-		logrus.Fatal("Error connecting to DB")
-	}
-}
-
-func artists(w http.ResponseWriter, req *http.Request) {
-	var a artist
-	var artists []artist
-	rows, err := DB.Query("SELECT * FROM artist;")
-	defer rows.Close()
-	if err != nil {
-		logrus.Error("Cannot perform query")
-	}
-	for rows.Next() {
-		err := rows.Scan(&a.ArtistID, &a.Email)
-		if err != nil {
-			logrus.Error(err)
-		}
-		artists = append(artists, a)
-		logrus.Println(a)
-	}
-	json.NewEncoder(w).Encode(artists)
-}
+import "artists/cmd"
 
 func main() {
-	http.HandleFunc("/artists", artists)
-	http.ListenAndServe(":8080", nil)
+  cmd.Execute()
 }
