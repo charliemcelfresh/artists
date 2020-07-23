@@ -42,10 +42,10 @@ func artists(w http.ResponseWriter, req *http.Request) {
 	var a artist
 	var artists []artist
 	rows, err := DB.Query("SELECT * FROM artist;")
-	defer rows.Close()
 	if err != nil {
 		logrus.Error("Cannot perform query")
 	}
+	defer rows.Close()
 	for rows.Next() {
 		err := rows.Scan(&a.ArtistID, &a.Email)
 		if err != nil {
