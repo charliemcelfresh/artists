@@ -1,0 +1,30 @@
+commands:
+  root:
+    use: "artist"
+    short: "artist service"
+  server:
+    use: "server"
+    short: "API server for artist data"
+  load_artists:
+    use: "loadArtists"
+    short: "load artists to database"
+  build_yaml_struct:
+    use: "buildYAMLStruct"
+    short: "builds a Go struct based on the structure of a YAML file"
+environment_variables:
+  database_url: "DATABASE_URL"
+sql_drivers:
+  postgres: "postgres"
+errors:
+  error_loading_env: "Error loading .env file"
+  error_connecting_to_db: "Error connecting to DB"
+  error_performing_query: "Cannot perform query"
+  error_subcommand_required: "subcommand required"
+paths:
+  artists: "/artists"
+ports:
+  eighty_eighty: ":8080"
+flags:
+  load_artists_count_flag:
+    name: "count"
+    description: "number of artists to load"

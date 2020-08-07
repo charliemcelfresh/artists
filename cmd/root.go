@@ -27,9 +27,9 @@ func init() {
 	if err != nil {
 		logrus.Fatal(translations.StringValues.Errors.ErrorLoadingEnv)
 	}
-	DB, err = sql.Open(translations.StringValues.SQLDrivers.Postgres, os.Getenv(translations.StringValues.EnvironmentVariables.DatabaseURL))
+	DB, err = sql.Open(translations.StringValues.SqlDrivers.Postgres, os.Getenv(translations.StringValues.EnvironmentVariables.DatabaseUrl))
 	if err != nil {
-		logrus.Fatal(translations.StringValues.Errors.ErrorConnectingToDB)
+		logrus.Fatal(translations.StringValues.Errors.ErrorConnectingToDb)
 	}
 
 }
